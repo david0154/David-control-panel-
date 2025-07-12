@@ -31,7 +31,7 @@ HESTIA_COMMON_DIR="$HESTIA/install/common"
 VERBOSE='no'
 
 # Define software versions
-HESTIA_INSTALL_VER='1.9.3~alpha'
+HESTIA_INSTALL_VER='1.10.0~alpha'
 # Supported PHP versions
 multiphp_v=("5.6" "7.0" "7.1" "7.2" "7.3" "7.4" "8.0" "8.1" "8.2" "8.3" "8.4")
 # One of the following PHP versions is required for Roundcube / phpmyadmin
@@ -44,7 +44,7 @@ mariadb_v="11.4"
 node_v="20"
 
 # Defining software pack for all distros
-software="acl apache2 apache2.2-common apache2-suexec-custom apache2-utils apparmor-utils awstats bc bind9 bsdmainutils bsdutils
+software="acl apache2 apache2.2-common apache2-suexec-custom apache2-utils apparmor-utils at awstats bc bind9 bsdmainutils bsdutils
   clamav-daemon cron curl dnsutils dovecot-imapd dovecot-managesieved dovecot-pop3d dovecot-sieve e2fslibs e2fsprogs
   exim4 exim4-daemon-heavy expect fail2ban flex ftp git hestia=${HESTIA_INSTALL_VER} hestia-nginx hestia-php hestia-web-terminal
   idn2 imagemagick ipset jq libapache2-mod-fcgid libapache2-mod-php$fpm_v libapache2-mod-rpaf libonig5 libzip4 lsb-release
@@ -52,7 +52,7 @@ software="acl apache2 apache2.2-common apache2-suexec-custom apache2-utils appar
   php$fpm_v php$fpm_v-apcu php$fpm_v-bz2 php$fpm_v-cgi php$fpm_v-cli php$fpm_v-common php$fpm_v-curl php$fpm_v-gd
   php$fpm_v-imagick php$fpm_v-imap php$fpm_v-intl php$fpm_v-ldap php$fpm_v-mbstring php$fpm_v-mysql php$fpm_v-opcache
   php$fpm_v-pgsql php$fpm_v-pspell php$fpm_v-readline php$fpm_v-xml php$fpm_v-zip postgresql postgresql-contrib
-  proftpd-basic quota rrdtool rsyslog util-linux spamassassin
+  proftpd-core proftpd-mod-crypto quota rrdtool rsyslog util-linux spamassassin
   sysstat unzip vim-common vsftpd whois zip zstd bubblewrap restic"
 
 installer_dependencies="apt-transport-https ca-certificates curl dirmngr gnupg openssl software-properties-common wget sudo"
@@ -983,8 +983,9 @@ if [ "$vsftpd" = 'no' ]; then
 	software=$(echo "$software" | sed -e "s/vsftpd//")
 fi
 if [ "$proftpd" = 'no' ]; then
-	software=$(echo "$software" | sed -e "s/proftpd-basic//")
+	software=$(echo "$software" | sed -e "s/proftpd-core//")
 	software=$(echo "$software" | sed -e "s/proftpd-mod-vroot//")
+	software=$(echo "$software" | sed -e "s/proftpd-mod-crypto//")
 fi
 if [ "$named" = 'no' ]; then
 	software=$(echo "$software" | sed -e "s/bind9//")
